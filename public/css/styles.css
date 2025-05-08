@@ -4,3 +4,160 @@
 *:after {
   box-sizing: border-box;
 }
+
+:root {
+  --paragraph-color: #22211f;
+  --body-font: 'Roboto Slab', sans-serif;
+  --secondary-background-color: #32021F;
+  --secondary-paragraph-color: rgb(51, 51, 51);
+}
+
+/*********** Mobile view ************/
+
+body {
+  max-width: 980px;
+  margin: 0 auto;
+  font-family: var(--body-font);
+  padding: 10px;
+}
+
+h2 {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+#top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#top-header a {
+  text-decoration: none;
+  color: var(--paragraph-color);
+}
+
+.siteName {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+nav {
+  background-color: var(--paragraph-color);
+  color: white;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  list-style: none;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#banner {
+  position: relative;
+}
+
+#description {
+  position: absolute;
+  color: var(--secondary-background-color);
+  background-color: rgba(255, 255, 255, 0.3);
+  font-size: 1.1rem;
+}
+
+#description ul {
+  list-style: none;
+  margin-left: -40px;
+  margin-top: -20px;
+  margin-bottom: 0px;
+}
+
+#hero-image img {
+  width: 400px;
+}
+
+#own {
+  background-color: #007BFF;
+  color: black;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+#own:hover {
+  background-color: var(--paragraph-color);
+  color: aliceblue;
+}
+
+#reviews ul li {
+  margin-bottom: 10px;
+  opacity: 0.95;
+  font-size: 0.9rem;
+  margin-left: -20px;
+}
+
+.upgrade-types {
+  display: flex;
+  margin-left: -40px;
+}
+
+.upgrade-types figure img {
+  background-color: #007BFF;
+  padding: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  align-items: center;
+}
+
+.upgrade-types figcaption {
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+  #review-and-upgrades {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    align-items: start;
+  }
+
+  #upgrades {
+    order: 1;
+  }
+
+  #reviews {
+    order: 2;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  nav ul {
+    font-size: 1.2rem;
+    margin-left: 100px;
+    margin-right: 100px;
+  }
+
+  #banner {
+    margin-left: 40px;
+  }
+
+  #description {
+    font-size: 1.5rem;
+  }
+
+  #hero-image img {
+    width: 600px;
+  }
+
+  #reviews ul li {
+    margin-bottom: 25px;
+    opacity: 1;
+    font-size: 1.2rem;
+  }
+}
