@@ -55,6 +55,11 @@ nav ul {
   margin-right: 10px;
 }
 
+nav ul a {
+  text-decoration: none;
+  color: white
+}
+
 #banner {
   position: relative;
 }
@@ -114,6 +119,36 @@ nav ul {
 
 .upgrade-types figcaption {
   text-align: center;
+}
+
+#inv-title {
+  text-align: center;
+}
+
+#inv-display {
+  list-style: none;
+  text-align: center;
+}
+
+#inv-display li {
+  display: block;
+  border: 0.5px solid #a7a298;
+  margin: 20px 100px;
+  border-radius: 10px;
+}
+
+#inv-display img {
+  border-radius: 10px;
+  width: 100%;
+}
+
+#inv-display hr {
+  height: 5px;
+  background-color: #22211f;
+}
+
+.namePrice {
+  margin-bottom: 20px;
 }
 
 @media screen and (min-width: 768px) {
@@ -186,6 +221,31 @@ nav ul {
 
   #reviews {
     order: 2;
+  }
+
+  #inv-title {
+    text-align: left;
+    margin-left: 40px;
+  }
+
+  #inv-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+  }
+
+  #inv-display li {
+    margin: 0 auto;
+
+  }
+
+  #inv-display img {
+    width: 200px;
+    height: 100px;
+  }
+
+  #inv-display a {
+    font-size: 0.5em;
   }
 
 
