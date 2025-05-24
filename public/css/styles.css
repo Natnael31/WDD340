@@ -151,6 +151,14 @@ nav ul a {
   margin-bottom: 20px;
 }
 
+#vehicle-detail img {
+  max-width: 100%;
+}
+
+#vehicle-detail span {
+  font-weight: 600;
+}
+
 @media screen and (min-width: 768px) {
 
   html {
@@ -246,6 +254,13 @@ nav ul a {
 
   #inv-display a {
     font-size: 0.5em;
+  }
+
+  #vehicle-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 30px;
+
   }
 
 

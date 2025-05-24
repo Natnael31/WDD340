@@ -13,7 +13,7 @@ const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute");
 const baseController = require('./controllers/baseController');
 const utilities = require("./utilities");
-
+const invController = require("./controllers/invController");
 
 /* ***********************
  * View Engine and Templates
@@ -31,6 +31,7 @@ app.use("/inv", inventoryRoute);
 
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
+app.get("/cause-error", utilities.handleErrors(invController.createDeliberateError));
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
