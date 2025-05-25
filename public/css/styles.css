@@ -53,11 +53,13 @@ nav ul {
   list-style: none;
   margin-left: 10px;
   margin-right: 10px;
+  font-size: 0.9em;
 }
 
 nav ul a {
   text-decoration: none;
-  color: white
+  color: white;
+
 }
 
 #banner {
