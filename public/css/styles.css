@@ -147,6 +147,10 @@ nav ul a {
   background-color: #22211f;
 }
 
+#inv-display a {
+  font-size: 0.8em;
+}
+
 .namePrice {
   margin-bottom: 20px;
 }
@@ -253,7 +257,7 @@ nav ul a {
   }
 
   #inv-display a {
-    font-size: 0.5em;
+    font-size: 0.6em;
   }
 
   #vehicle-detail {
