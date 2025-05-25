@@ -128,6 +128,7 @@ nav ul a {
 #inv-display {
   list-style: none;
   text-align: center;
+  max-width: 100%;
 }
 
 #inv-display li {
@@ -148,7 +149,7 @@ nav ul a {
 }
 
 #inv-display a {
-  font-size: 0.8em;
+  font-size: 0.6em;
 }
 
 .namePrice {
