@@ -1,0 +1,21 @@
+<h1>
+    <%= title %>
+
+</h1>
+<%- messages() %>
+
+    <form action="/account/register" method="post" id="register-form">
+        <p>All fields are required!</p>
+        <label for="account_firstname">First name:</label>
+        <input type="text" name="account_firstname" id="account_firstname" required> <br>
+        <label for="account_lastname">Last name:</label>
+        <input type="text" name="account_lastname" id="account_lastname" required> <br>
+        <label for="account_email">Email Address:</label>
+        <input type="email" name="account_email" id="account_email" required> <br>
+        <label for="account_password">Password:</label>
+        <input type="text" name="account_password" id="account_password" required> <br>
+        <p>Password must be a minimum of 12 characters in length and include 1 capital letter, 1 number and 1 special
+            character!</p>
+        <button type="submit" id="register-button">Register</button>
+
+    </form>

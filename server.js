@@ -5,18 +5,19 @@
 /* ***********************
  * Require Statements
  *************************/
-const express = require("express")
+const express = require("express");
 const expressLayouts = require('express-ejs-layouts');
-const env = require("dotenv").config()
-const app = express()
+const env = require("dotenv").config();
+const app = express();
+const bodyParser = require("body-parser");
 const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute");
 const accountRoute = require("./routes/accountRoute");
 const baseController = require('./controllers/baseController');
 const utilities = require("./utilities");
 const invController = require("./controllers/invController");
-const session = require("express-session")
-const pool = require('./database/')
+const session = require("express-session");
+const pool = require('./database/');
 
 
 /* ***********************
@@ -32,6 +33,10 @@ app.use(session({
   saveUninitialized: true,
   name: 'sessionId',
 }))
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
 
 
 // Express Messages Middleware
