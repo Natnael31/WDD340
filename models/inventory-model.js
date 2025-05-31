@@ -60,7 +60,7 @@ async function addInventory(item) {
     RETURNING inv_id;
   `;
 
-    const params = [
+    const values = [
         item.classification_id,
         item.inv_make,
         item.inv_model,
@@ -74,7 +74,7 @@ async function addInventory(item) {
     ];
 
     try {
-        const result = await pool.query(sql, params);
+        const result = await pool.query(sql, values);
         return result.rows.length > 0;
     } catch (err) {
         console.error("Error inserting inventory:", err);
