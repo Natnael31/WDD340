@@ -6,10 +6,11 @@
 
     <form action="/login" id="login-form">
         <label for="account_email">Email</label>
-        <input type="email" name="account_email" id="account_email"> <br>
+        <input type="email" name="account_email" id="account_email" required> <br>
 
         <label for="account_password">password</label>
-        <input type="text" name="account_password" id="account_password"> <br>
+        <input type="password" name="account_password" id="account_password" required
+            pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"> <br>
 
         <button type="submit" id="login-button">LOGIN</button>
         <div id="registration-link">No account? <a href="/account/register">Sign-up</a></div>

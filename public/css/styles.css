@@ -273,6 +273,19 @@ nav ul a {
   font-weight: 900;
 }
 
+/* input:required:invalid,
+input:focus:invalid {
+  background-image: url(/images/invalid.png);
+  background-position: right top;
+  background-repeat: no-repeat;
+}
+
+input:required:valid {
+  background-image: url(/images/valid.png);
+  background-position: right top;
+  background-repeat: no-repeat;
+} */
+
 
 @media screen and (min-width: 768px) {
 
