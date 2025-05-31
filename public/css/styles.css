@@ -273,6 +273,19 @@ nav ul a {
   font-weight: 900;
 }
 
+#register-form div {
+  font-style: italic;
+  margin: 20px auto;
+}
+
+#classificationList {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
 /* input:required:invalid,
 input:focus:invalid {
   background-image: url(/images/invalid.png);
@@ -286,6 +299,10 @@ input:required:valid {
   background-repeat: no-repeat;
 } */
 
+#vehicle-mangement li {
+  list-style: none;
+  margin-bottom: 10px;
+}
 
 @media screen and (min-width: 768px) {
 
