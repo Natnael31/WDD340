@@ -10,6 +10,7 @@ const expressLayouts = require('express-ejs-layouts');
 const env = require("dotenv").config();
 const app = express();
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser")
 const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute");
 const accountRoute = require("./routes/accountRoute");
@@ -34,8 +35,10 @@ app.use(session({
   name: 'sessionId',
 }))
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json()) //(to parse incoming JSON data in the request body using req.body)
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded(for Web forms data)
+app.use(cookieParser())
+app.use(utilities.checkJWTToken)
 
 
 

@@ -3,15 +3,26 @@
 
 </h1>
 <%- messages() %>
+    <% if (errors) { %>
+        <ul class="notice">
+            <% errors.array().forEach(error=> { %>
+                <li>
+                    <%= error.msg %>
+                </li>
+                <% }) %>
+        </ul>
+        <% } %>
 
-    <form action="/login" id="login-form">
-        <label for="account_email">Email</label>
-        <input type="email" name="account_email" id="account_email" required> <br>
+            <form action="/account/login" id="login-form" method="post">
+                <label for="account_email">Email</label>
+                <input type="email" name="account_email" id="account_email"
+                    value="<%= typeof account_email !== 'undefined' ? account_email : '' %>" required> <br>
 
-        <label for="account_password">password</label>
-        <input type="password" name="account_password" id="account_password" required
-            pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"> <br>
+                <label for="account_password">password</label>
+                <input type="password" name="account_password" id="account_password"
+                    value="<%= typeof account_password !== 'undefined' ? account_password : '' %>" required
+                    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"> <br>
 
-        <button type="submit" id="login-button">LOGIN</button>
-        <div id="registration-link">No account? <a href="/account/register">Sign-up</a></div>
-    </form>
+                <button type="submit" id="login-button">LOGIN</button>
+                <div id="registration-link">No account? <a href="/account/register">Sign-up</a></div>
+            </form>
