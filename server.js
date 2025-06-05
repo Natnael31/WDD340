@@ -38,7 +38,7 @@ app.use(session({
 app.use(bodyParser.json()) //(to parse incoming JSON data in the request body using req.body)
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded(for Web forms data)
 app.use(cookieParser())
-app.use(utilities.checkJWTToken)
+app.use(utilities.checkJWTToken) // check jwt token in the whole application
 
 
 

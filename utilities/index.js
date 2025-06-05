@@ -106,20 +106,32 @@ Util.buildClassificationList = async function (classification_id = null) {
 Util.checkJWTToken = (req, res, next) => {
     if (req.cookies.jwt) {
         jwt.verify(
-            req.cookies.jwt, // get the cookie called jwt stored in the browser
-            process.env.ACCESS_TOKEN_SECRET, // get the signing secret token from the environment file
+            req.cookies.jwt, // check the jwt token in the cookie stored in the browser
+            process.env.ACCESS_TOKEN_SECRET, // check the signing secret token from the environment file
             function (err, accountData) {
                 if (err) {
                     req.flash("Please log in")
                     res.clearCookie("jwt")
                     return res.redirect("/account/login")
                 }
-                res.locals.accountData = accountData // use the jwt data to log in the user
-                res.locals.loggedin = 1
+                res.locals.accountData = accountData
+                res.locals.loggedin = 1 // if the token is valid flag the user has logged in or has been authenticated
                 next()
             })
     } else {
         next()
+    }
+}
+
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+Util.checkLogin = (req, res, next) => {
+    if (res.locals.loggedin) { // check if a user had logged in before( found in the jwt verification above) for authorization purpose
+        next()
+    } else {
+        req.flash("notice", "Please log in.")
+        return res.redirect("/account/login")
     }
 }
 
