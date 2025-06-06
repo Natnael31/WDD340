@@ -14,7 +14,7 @@ router.get("/addInventory", utilities.handleErrors(invController.buildAddInvento
 router.post("/addInventory", VehicleManagementValidate.addInventoryRules(), VehicleManagementValidate.checkAddInventory, utilities.handleErrors(invController.addInventory))
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 router.get("/edit/:inv_id", utilities.handleErrors(invController.updateInventoryView))
-router.post("/update/", utilities.handleErrors(invController.updateInventory))
+router.post("/update/", VehicleManagementValidate.addInventoryRules(), VehicleManagementValidate.checkUpdateInventory, utilities.handleErrors(invController.updateInventory))
 
 
 

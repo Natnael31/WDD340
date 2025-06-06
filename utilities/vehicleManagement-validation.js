@@ -111,30 +111,30 @@ validate.checkAddInventory = async (req, res, next) => {
     }
 }
 
-// validate.checkUpdateInventory = async (req, res, next) => {
-//     let errors = [];
-//     errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//         const inv_id = parseInt(req.params.inv_id)
-//         console.log(inv_id)
-//         let nav = await utilities.getNav()
-//         req.flash("notice", "This is a flash message.")
-//         const itemData = await invModel.getInventoryDetail(inv_id)
-//         // const classificationSelect = await utilities.buildClassificationList(itemData.classification_id)
-//         const itemName = `${itemData.inv_make} ${itemData.inv_model}`
-//         utilities.buildClassificationList(req.body.classification_id).then(classificationList => {
-//             res.render("./inventory/updateInventory", {
-//                 title: "Edit " + itemName,
-//                 nav,
-//                 classificationList,
-//                 errors: null,
-//                 ...req.body,
-//             });
-//         });
-//     } else {
-//         next();
-//     }
-// }
+validate.checkUpdateInventory = async (req, res, next) => {
+    const item = req.body;
+    const inv_id = parseInt(item.inv_id);
+    console.log(inv_id)
+    let errors = [];
+    errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        req.flash("notice", "This is a flash message.")
+        const itemData = await invModel.getInventoryDetail(inv_id)
+        const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+        utilities.buildClassificationList(req.body.classification_id).then(classificationList => {
+            res.render("./inventory/updateInventory", {
+                title: "Edit " + itemName,
+                nav,
+                classificationList,
+                errors,
+                ...req.body,
+            });
+        });
+    } else {
+        next();
+    }
+}
 
 
 
