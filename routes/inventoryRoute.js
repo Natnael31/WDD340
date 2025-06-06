@@ -15,7 +15,7 @@ router.post("/addInventory", VehicleManagementValidate.addInventoryRules(), Vehi
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 router.get("/edit/:inv_id", utilities.handleErrors(invController.updateInventoryView))
 router.post("/update/", VehicleManagementValidate.addInventoryRules(), VehicleManagementValidate.checkUpdateInventory, utilities.handleErrors(invController.updateInventory))
-
-
+router.get("/delete/:inv_id", utilities.handleErrors(invController.deleteInventoryView))
+router.post("/delete/", utilities.handleErrors(invController.deleteInventory))
 
 module.exports = router;

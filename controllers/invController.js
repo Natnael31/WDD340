@@ -104,7 +104,7 @@ invCont.addInventory = async function (req, res, next) {
 
     const item = req.body;
 
-    const classificationList = await utilities.buildClassificationList(item.classification_id)
+    const classificationSelect = await utilities.buildClassificationList(item.classification_id)
     const addInventory = await invModel.addInventory(item)
     if (addInventory) {
         let nav = await utilities.getNav()
@@ -115,6 +115,8 @@ invCont.addInventory = async function (req, res, next) {
         res.status(201).render("./inventory/vehicleManagement", {
             title: "Vehicle Management",
             nav,
+            classificationSelect,
+            errors: null
         })
     } else {
         let nav = await utilities.getNav()
@@ -122,7 +124,7 @@ invCont.addInventory = async function (req, res, next) {
         res.status(501).render("./inventory/add-inventory", {
             title: "Add Vehicle",
             nav,
-            classificationList,
+            classificationSelect,
             errors,
             ...item,
         })
@@ -215,7 +217,7 @@ invCont.updateInventory = async function (req, res, next) {
         res.status(501).render("inventory/updateInventory", {
             title: "Edit " + itemName,
             nav,
-            classificationSelect: classificationSelect,
+            classificationList: classificationSelect,
             errors: null,
             inv_id,
             inv_make,
@@ -231,5 +233,63 @@ invCont.updateInventory = async function (req, res, next) {
         })
     }
 }
+
+invCont.deleteInventoryView = async function (req, res, next) {
+    const inv_id = parseInt(req.params.inv_id)
+    console.log(inv_id)
+    let nav = await utilities.getNav()
+    req.flash("notice", "This is a flash message.")
+    const itemData = await invModel.getInventoryDetail(inv_id)
+    const classificationSelect = await utilities.buildClassificationList(itemData.classification_id)
+    const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+    res.render("./inventory/delete-confirmation", {
+        title: "delete " + itemName,
+        nav,
+        classificationList: classificationSelect,
+        errors: null,
+        inv_id: itemData.inv_id,
+        inv_make: itemData.inv_make,
+        inv_model: itemData.inv_model,
+        inv_year: itemData.inv_year,
+        inv_price: itemData.inv_price,
+        classification_id: itemData.classification_id
+    })
+}
+
+invCont.deleteInventory = async function (req, res, next) {
+    let nav = await utilities.getNav()
+    const {
+        inv_id,
+        inv_make,
+        inv_model,
+        inv_price,
+        inv_year,
+        classification_id,
+    } = req.body
+    const deleteResult = await invModel.deleteInventory(inv_id)
+
+    if (deleteResult) {
+        const itemName = inv_make + " " + inv_model
+        req.flash("notice", `The ${itemName} was successfully deleted.`)
+        res.redirect("/inv/")
+    } else {
+        const classificationSelect = await utilities.buildClassificationList(classification_id)
+        const itemName = `${inv_make} ${inv_model}`
+        req.flash("notice", "Sorry, the delete failed.")
+        res.status(501).render("inventory/delete-confirmation", {
+            title: "delete " + itemName,
+            nav,
+            classificationSelect: classificationSelect,
+            errors: null,
+            inv_id,
+            inv_make,
+            inv_model,
+            inv_year,
+            inv_price,
+            classification_id
+        })
+    }
+}
+
 
 module.exports = invCont
