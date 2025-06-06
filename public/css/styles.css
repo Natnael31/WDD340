@@ -304,6 +304,43 @@ input:required:valid {
   margin-bottom: 10px;
 }
 
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+#inventoryDisplay thead {
+  background-color: #343a40;
+  color: white;
+}
+
+#inventoryDisplay th,
+#inventoryDisplay td {
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+#inventoryDisplay tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#inventoryDisplay tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+#inventoryDisplay a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+#inventoryDisplay a:hover {
+  text-decoration: underline;
+}
+
+
 @media screen and (min-width: 768px) {
 
   html {

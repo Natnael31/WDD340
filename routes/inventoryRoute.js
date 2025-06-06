@@ -12,6 +12,9 @@ router.get("/addClassification", utilities.handleErrors(invController.buildAddCl
 router.post("/addClassification", VehicleManagementValidate.addClassificationRules(), VehicleManagementValidate.checkAddClasification, utilities.handleErrors(invController.addClassification))
 router.get("/addInventory", utilities.handleErrors(invController.buildAddInventory))
 router.post("/addInventory", VehicleManagementValidate.addInventoryRules(), VehicleManagementValidate.checkAddInventory, utilities.handleErrors(invController.addInventory))
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+router.get("/edit/:inv_id", utilities.handleErrors(invController.updateInventoryView))
+router.post("/update/", utilities.handleErrors(invController.updateInventory))
 
 
 
