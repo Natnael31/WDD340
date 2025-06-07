@@ -390,7 +390,6 @@ input:required:valid {
 #tools {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  list-style: none;
   grid-gap: 10px;
   margin-right: -30px;
 }
