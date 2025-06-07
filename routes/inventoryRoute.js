@@ -7,15 +7,15 @@ const VehicleManagementValidate = require("../utilities/vehicleManagement-valida
 // Route to build inventory by classification view
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildInventoryDetail));
-router.get("/", utilities.handleErrors(invController.buildVehicleManagement));
-router.get("/addClassification", utilities.handleErrors(invController.buildAddClassification))
-router.post("/addClassification", VehicleManagementValidate.addClassificationRules(), VehicleManagementValidate.checkAddClasification, utilities.handleErrors(invController.addClassification))
-router.get("/addInventory", utilities.handleErrors(invController.buildAddInventory))
-router.post("/addInventory", VehicleManagementValidate.addInventoryRules(), VehicleManagementValidate.checkAddInventory, utilities.handleErrors(invController.addInventory))
+router.get("/", utilities.checkAccount, utilities.handleErrors(invController.buildVehicleManagement));
+router.get("/addClassification", utilities.checkAccount, utilities.handleErrors(invController.buildAddClassification))
+router.post("/addClassification", utilities.checkAccount, VehicleManagementValidate.addClassificationRules(), VehicleManagementValidate.checkAddClasification, utilities.handleErrors(invController.addClassification))
+router.get("/addInventory", utilities.checkAccount, utilities.handleErrors(invController.buildAddInventory))
+router.post("/addInventory", utilities.checkAccount, VehicleManagementValidate.addInventoryRules(), VehicleManagementValidate.checkAddInventory, utilities.handleErrors(invController.addInventory))
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
-router.get("/edit/:inv_id", utilities.handleErrors(invController.updateInventoryView))
-router.post("/update/", VehicleManagementValidate.addInventoryRules(), VehicleManagementValidate.checkUpdateInventory, utilities.handleErrors(invController.updateInventory))
-router.get("/delete/:inv_id", utilities.handleErrors(invController.deleteInventoryView))
-router.post("/delete/", utilities.handleErrors(invController.deleteInventory))
+router.get("/edit/:inv_id", utilities.checkAccount, utilities.handleErrors(invController.updateInventoryView))
+router.post("/update/", utilities.checkAccount, VehicleManagementValidate.addInventoryRules(), VehicleManagementValidate.checkUpdateInventory, utilities.handleErrors(invController.updateInventory))
+router.get("/delete/:inv_id", utilities.checkAccount, utilities.handleErrors(invController.deleteInventoryView))
+router.post("/delete/", utilities.checkAccount, utilities.handleErrors(invController.deleteInventory))
 
 module.exports = router;

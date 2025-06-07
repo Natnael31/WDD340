@@ -135,6 +135,33 @@ Util.checkLogin = (req, res, next) => {
     }
 }
 
+Util.checkAccount = (req, res, next) => {
+
+    const jwtToken = req.cookies.jwt
+
+    if (!jwtToken) {
+        req.flash("notice", "You must be logged in to access this page.")
+        return res.status(403).redirect("/account/login")
+    }
+
+    jwt.verify(jwtToken, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+        if (err) {
+            req.flash("notice", "Invalid session. Please log in again.")
+            return res.status(403).redirect("/account/login")
+        }
+
+        const accountType = decoded.account_type
+        if (accountType === "Employee" || accountType === "Admin") {
+            req.user = decoded // attach decoded user to request
+            next()
+        } else {
+            req.flash("notice", "You do not have permission to view this page.")
+            return res.status(403).redirect("/account/login")
+        }
+    })
+}
+
+
 
 /* ****************************************
  * Middleware For Handling Errors

@@ -35,6 +35,13 @@ app.use(session({
   name: 'sessionId',
 }))
 
+
+app.use((req, res, next) => {
+  res.locals.loggedin = req.session.loggedin || false;
+  res.locals.user = req.session.user || null;
+  next();
+});
+
 app.use(bodyParser.json()) //(to parse incoming JSON data in the request body using req.body)
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded(for Web forms data)
 app.use(cookieParser())
