@@ -4,11 +4,9 @@
     </span>
     <div id="tools">
         <% if (locals.loggedin && user) { %>
-            <!-- Client is logged in -->
             <a href="/account/">Welcome <%= user.account_firstname %></a>
             <a href="/account/logout">Logout</a>
             <% } else { %>
-                <!-- Client is not logged in -->
                 <a title="Click to log in" href="/account/login">My Account</a>
                 <% } %>
     </div>
