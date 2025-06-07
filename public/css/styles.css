@@ -392,6 +392,8 @@ input:required:valid {
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
   margin-right: -30px;
+  list-style: none;
+
 }
 
 @media screen and (min-width: 768px) {
