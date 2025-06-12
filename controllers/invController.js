@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const revModel = require("../models/review-model")
 const utilities = require("../utilities/")
 
 const invCont = {}
@@ -21,16 +22,34 @@ invCont.buildByClassificationId = async function (req, res, next) {
 
 invCont.buildInventoryDetail = async function (req, res, next) {
     const inventory_id = req.params.inventoryId;
+    let nav = await utilities.getNav()
     // console.log(inventory_id)
     const data = await invModel.getInventoryDetail(inventory_id);
-    let nav = await utilities.getNav()
+    const reviews = await revModel.getReviewsByInvId(inventory_id);
+    const account = res.locals.accountData;
+    console.log(account)
     // console.log(data)
     const details = await utilities.buildDetail(data)
-    res.render("inventory/inventoryDetail", {
-        title: `${data.inv_make} ${data.inv_model}`,
-        nav,
-        details
-    });
+    if (account) {
+        const screenName = account.account_firstname + account.account_lastname;
+        res.render("inventory/inventoryDetail", {
+            title: `${data.inv_make} ${data.inv_model}`,
+            reviews: reviews.rows,
+            nav,
+            data,
+            screenName,
+            account_id: account.account_id,
+            details
+        });
+    } else {
+        res.render("inventory/inventoryDetail", {
+            title: `${data.inv_make} ${data.inv_model}`,
+            reviews: reviews.rows,
+            nav,
+            data,
+            details
+        });
+    }
 }
 
 invCont.createDeliberateError = async function (req, res, next) {
@@ -149,7 +168,7 @@ invCont.getInventoryJSON = async (req, res, next) => {
  * ************************** */
 invCont.updateInventoryView = async function (req, res, next) {
     const inv_id = parseInt(req.params.inv_id)
-    console.log(inv_id)
+    // console.log(inv_id)
     let nav = await utilities.getNav()
     req.flash("notice", "This is a flash message.")
     const itemData = await invModel.getInventoryDetail(inv_id)
@@ -236,7 +255,7 @@ invCont.updateInventory = async function (req, res, next) {
 
 invCont.deleteInventoryView = async function (req, res, next) {
     const inv_id = parseInt(req.params.inv_id)
-    console.log(inv_id)
+    // console.log(inv_id)
     let nav = await utilities.getNav()
     req.flash("notice", "This is a flash message.")
     const itemData = await invModel.getInventoryDetail(inv_id)

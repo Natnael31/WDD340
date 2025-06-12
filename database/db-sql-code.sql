@@ -255,3 +255,11 @@ WHERE classification.classification_name = 'Sport';
 UPDATE inventory
 SET inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),
     inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');
+--Review table
+CREATE TABLE review (
+    review_id SERIAL PRIMARY KEY,
+    review_text TEXT NOT NULL,
+    review_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    inv_id INT NOT NULL REFERENCES inventory(inv_id) ON DELETE CASCADE,
+    account_id INT NOT NULL REFERENCES account(account_id) ON DELETE CASCADE
+);

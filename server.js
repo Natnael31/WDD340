@@ -14,6 +14,7 @@ const cookieParser = require("cookie-parser")
 const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute");
 const accountRoute = require("./routes/accountRoute");
+const reviewRoute = require("./routes/reviewRoute")
 const baseController = require('./controllers/baseController');
 const utilities = require("./utilities");
 const invController = require("./controllers/invController");
@@ -71,7 +72,9 @@ app.set("layout", "./layouts/layout") // not at views root
 app.use(static)
 app.use("/inv", inventoryRoute);
 app.use("/account", accountRoute);
+app.use("/review", reviewRoute);
 // app.use("/account", require("./routes/accountRoute"));
+
 
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))

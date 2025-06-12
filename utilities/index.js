@@ -104,9 +104,9 @@ Util.buildClassificationList = async function (classification_id = null) {
 * Middleware to check token validity
 **************************************** */
 Util.checkJWTToken = (req, res, next) => {
-    if (req.cookies.jwt) {
+    if (req.cookies.jwt) { // if there is a cookie called 'jwt'
         jwt.verify(
-            req.cookies.jwt, // check the jwt token in the cookie stored in the browser
+            req.cookies.jwt, // check the jwt token in the cookie stored in the browser is the correct one
             process.env.ACCESS_TOKEN_SECRET, // check the signing secret token from the environment file
             function (err, accountData) {
                 if (err) {

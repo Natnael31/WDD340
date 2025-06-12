@@ -4,3 +4,38 @@
 <div class="vehicle-wrapper">
     <%- details %>
 </div>
+
+<h3>Customer Reviews</h3>
+<% if (reviews.length> 0) { %>
+    <ul id="reviews">
+        <% reviews.forEach(review=> { %>
+            <li>
+
+                <% const date=new Date(review.review_date); const formattedDate=date.toLocaleDateString('en-US', {
+                    year: 'numeric' , month: 'long' , day: 'numeric' }); %>
+                    <strong>
+                        <%= review.account_firstname[0] + review.account_lastname %> wrote on
+                    </strong> on <%= formattedDate %>
+            </li>
+            <p>
+                <%= review.review_text%>
+            </p>
+            <% }) %>
+    </ul>
+    <% } else { %>
+        <p>Be the first to write a review.</p>
+        <% } %>
+            <% if (!loggedin) { %>
+                <p>You must <a href="/account/login">log in</a> to write a review.</p>
+                <% } else { %>
+                    <h3>Add your own review</h3>
+                    <form action="/review/add" method="post">
+                        <p>Screen Name: <strong>
+                                <%= screenName %>
+                            </strong></p>
+                        <textarea name="review_text" rows="5" cols="50" required></textarea><br>
+                        <input type="hidden" name="inv_id" value="<%= data.inv_id %>">
+                        <input type="hidden" name="account_id" value="<%= account_id %>">
+                        <button type="submit" id="review-button">Submit Review</button>
+                    </form>
+                    <% } %>

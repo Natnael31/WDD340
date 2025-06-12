@@ -1,4 +1,6 @@
 const accountModel = require("../models/account-model")
+const revModel = require("../models/review-model")
+const invModel = require("../models/inventory-model")
 const utilities = require("../utilities");
 const jwt = require("jsonwebtoken")
 const bcrypt = require('bcryptjs');
@@ -116,7 +118,7 @@ async function accountLogin(req, res) {
                 maxAge: 3600 * 1000,
                 ...(process.env.NODE_ENV !== 'development' && { secure: true }),
             };
-            res.cookie("jwt", accessToken, cookieOptions);
+            res.cookie("jwt", accessToken, cookieOptions); //jwt is the name of the cookie
 
             return res.redirect("/account/");
         }
@@ -136,15 +138,38 @@ async function accountLogin(req, res) {
 
 async function buildAccountManagement(req, res, next) {
     let nav = await utilities.getNav()
+    req.flash("notice", "This is a flash message.")
     const accountData = res.locals.accountData
     console.log(accountData)
-    req.flash("notice", "This is a flash message.")
-    res.render("account/accountManagement", {
-        title: "Account Management",
-        accountData,
-        nav,
-        errors: null
-    })
+    const userReviews = await revModel.getReviewsByAccountId(accountData.account_id)
+    console.log(userReviews.rows)
+    const inventory_idArray = userReviews.rows.map((review) => review.inv_id);
+    console.log(inventory_idArray)
+    let inventories = [];
+    for (let i = 0; i < inventory_idArray.length; i++) {
+        let inv = await invModel.getInventoryDetail(inventory_idArray[i])
+        inventories.push(inv);
+    }
+    console.log(inventories)
+
+
+    if (userReviews) {
+        res.render("account/accountManagement", {
+            title: "Account Management",
+            accountData,
+            nav,
+            userReviews: userReviews.rows,
+            inventories,
+            errors: null
+        })
+    } else {
+        res.render("account/accountManagement", {
+            title: "Account Management",
+            accountData,
+            nav,
+            errors: null
+        })
+    }
 }
 
 async function UpdateAccountView(req, res) {
