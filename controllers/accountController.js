@@ -140,18 +140,33 @@ async function buildAccountManagement(req, res, next) {
     let nav = await utilities.getNav()
     req.flash("notice", "This is a flash message.")
     const accountData = res.locals.accountData
-    console.log(accountData)
+    // console.log(accountData)
     const userReviews = await revModel.getReviewsByAccountId(accountData.account_id)
-    console.log(userReviews.rows)
-    const inventory_idArray = userReviews.rows.map((review) => review.inv_id);
-    console.log(inventory_idArray)
+    const adminReviews = await revModel.getAllReviews();
+    console.log(adminReviews.rows);
+    var inventory_idArray = []
+    // console.log(userReviews.rows)
+    if (accountData.account_type === "Admin") {
+        inventory_idArray = adminReviews.rows.map((review) => review.inv_id);
+    } else {
+        inventory_idArray = userReviews.rows.map((review) => review.inv_id);
+    }
+    const account_idArray = adminReviews.rows.map((review) => review.account_id);
+    // console.log(account_idArray)
+
+    // console.log(inventory_idArray)
     let inventories = [];
     for (let i = 0; i < inventory_idArray.length; i++) {
         let inv = await invModel.getInventoryDetail(inventory_idArray[i])
         inventories.push(inv);
     }
     console.log(inventories)
-
+    let accounts = [];
+    for (let i = 0; i < account_idArray.length; i++) {
+        let acc = await accountModel.getAccountById(account_idArray[i])
+        accounts.push(acc);
+    }
+    console.log(accounts)
 
     if (userReviews) {
         res.render("account/accountManagement", {
@@ -159,7 +174,9 @@ async function buildAccountManagement(req, res, next) {
             accountData,
             nav,
             userReviews: userReviews.rows,
+            adminReviews: adminReviews.rows,
             inventories,
+            accounts,
             errors: null
         })
     } else {

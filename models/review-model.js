@@ -5,6 +5,10 @@ async function addReview(review_text, inv_id, account_id) {
     return await pool.query(sql, [review_text, inv_id, account_id]);
 }
 
+async function getAllReviews() {
+    return await pool.query(`SELECT * FROM review ORDER BY review_date DESC;`);
+}
+
 async function getReviewById(review_id) {
     const sql = `SELECT * FROM review WHERE review_id = $1;`;
     return await pool.query(sql, [review_id]);
@@ -35,4 +39,4 @@ async function deleteReview(review_id) {
     return await pool.query(sql, [review_id]);
 }
 
-module.exports = { addReview, getReviewById, getReviewsByAccountId, getReviewsByInvId, updateReview, deleteReview };
+module.exports = { addReview, getAllReviews, getReviewById, getReviewsByAccountId, getReviewsByInvId, updateReview, deleteReview };

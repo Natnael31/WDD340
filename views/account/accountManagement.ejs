@@ -14,32 +14,66 @@
             <h2>Welcome <%= user.account_firstname %>
             </h2>
             <p>You are logged in!</p>
-            <% if (userReviews) { %>
-                <h3>My reviews</h3>
-                <% userReviews.forEach(review=> { %>
 
-                    <% const date=new Date(review.review_date); const formattedDate=date.toLocaleDateString('en-US', {
-                        year: 'numeric' , month: 'long' , day: 'numeric' }); %>
+            <% if (adminReviews || userReviews) { %>
+                <% if (user.account_type==="Admin" ) { %>
+                    <h3>Reviews</h3>
+                    <% adminReviews.forEach(review=> { %>
+                        <% const date=new Date(review.review_date); const formattedDate=date.toLocaleDateString('en-US',
+                            { year: 'numeric' , month: 'long' , day: 'numeric' }); %>
+                            <% const inventory=inventories.find(inv=> inv.inv_id === review.inv_id); %>
+                                <% const account=accounts.find(acc=> acc.account_id === review.account_id); %>
+                                    <% if (inventory && account) { %>
+                                        <ol>
+                                            <% if (account.account_firstname==="Manager" ) { %>
+                                                <% account.account_firstname="I" %>
+                                                    <% } %>
+                                                        <%= account.account_firstname %> reviewed the <%=
+                                                                inventory.inv_year %>
+                                                                <%= inventory.inv_make %>
+                                                                    <%= inventory.inv_model %> on <%= formattedDate %> |
+                                                                            <a
+                                                                                href='/review/edit/<%= review.review_id %>'>Edit</a>
+                                                                            |
+                                                                            <a
+                                                                                href='/review/delete/<%= review.review_id %>'>Delete</a>
+                                        </ol>
+                                        <% } %>
+                                            <% }) %>
+                                                <% } else { %>
+                                                    <h3>My reviews</h3>
+                                                    <% userReviews.forEach(review=> { %>
+                                                        <% const date=new Date(review.review_date); const
+                                                            formattedDate=date.toLocaleDateString('en-US', {
+                                                            year: 'numeric' , month: 'long' , day: 'numeric' }); %>
+                                                            <% const inventory=inventories.find(inv=> inv.inv_id ===
+                                                                review.inv_id); %>
+                                                                <% if (inventory) { %>
+                                                                    <ol>
+                                                                        Reviewed the <%= inventory.inv_year %>
+                                                                            <%= inventory.inv_make %>
+                                                                                <%= inventory.inv_model %> on <%=
+                                                                                        formattedDate %> |
+                                                                                        <a
+                                                                                            href='/review/edit/<%= review.review_id %>'>Edit</a>
+                                                                                        |
+                                                                                        <a
+                                                                                            href='/review/delete/<%= review.review_id %>'>Delete</a>
+                                                                    </ol>
+                                                                    <% } %>
+                                                                        <% }) %>
+                                                                            <% } %>
+                                                                                <% } %>
+                                                                                    <p><a
+                                                                                            href="/account/update/<%= user.account_id %>">Edit
+                                                                                            Account Information</a></p>
 
-                        <% const inventory=inventories.find(inv=> inv.inv_id === review.inv_id);
-                            if (inventory) {
-                            %>
-                            <ol>
-                                Reviewed the <%= inventory.inv_year %>
-                                    <%= inventory.inv_make %>
-                                        <%= inventory.inv_model %> on <%= formattedDate %> |
-                                                <a href='/review/edit/<%= review.review_id %>'>Edit</a> |
-                                                <a href='/review/delete/<%= review.review_id %>'>Delete</a>
-                            </ol>
-                            <% } %>
 
-                                <% }) %>
-                                    <p><a href="/inv/">Manage Inventory</a></p>
-                                    <% } %>
-                                        <p><a href="/account/update/<%= user.account_id %>">Edit Account Information</a>
-                                        </p>
-
-                                        <% if (user.account_type==="Admin" || user.account_type==="Employee" ) { %>
-                                            <h3>Inventory Management</h3>
-                                            <p><a href="/inv/">Manage Inventory</a></p>
-                                            <% } %>
+                                                                                    <% if (user.account_type==="Admin"
+                                                                                        ||
+                                                                                        user.account_type==="Employee" )
+                                                                                        { %>
+                                                                                        <h3>Inventory Management</h3>
+                                                                                        <p><a href="/inv/">Manage
+                                                                                                Inventory</a></p>
+                                                                                        <% } %>

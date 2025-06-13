@@ -1,5 +1,6 @@
 const invModel = require("../models/inventory-model")
 const revModel = require("../models/review-model")
+const accountModel = require("../models/account-model")
 const utilities = require("../utilities/")
 
 const invCont = {}
@@ -23,15 +24,16 @@ invCont.buildByClassificationId = async function (req, res, next) {
 invCont.buildInventoryDetail = async function (req, res, next) {
     const inventory_id = req.params.inventoryId;
     let nav = await utilities.getNav()
+    req.flash("notice", "This is a flash message.")
     // console.log(inventory_id)
     const data = await invModel.getInventoryDetail(inventory_id);
     const reviews = await revModel.getReviewsByInvId(inventory_id);
+    console.log(reviews.rows)
     const account = res.locals.accountData;
-    console.log(account)
     // console.log(data)
     const details = await utilities.buildDetail(data)
     if (account) {
-        const screenName = account.account_firstname + account.account_lastname;
+        const screenName = account.account_firstname[0] + account.account_lastname;
         res.render("inventory/inventoryDetail", {
             title: `${data.inv_make} ${data.inv_model}`,
             reviews: reviews.rows,
@@ -39,7 +41,8 @@ invCont.buildInventoryDetail = async function (req, res, next) {
             data,
             screenName,
             account_id: account.account_id,
-            details
+            details,
+            errors: null,
         });
     } else {
         res.render("inventory/inventoryDetail", {
@@ -47,7 +50,8 @@ invCont.buildInventoryDetail = async function (req, res, next) {
             reviews: reviews.rows,
             nav,
             data,
-            details
+            details,
+            errors: null,
         });
     }
 }
