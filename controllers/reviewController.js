@@ -5,7 +5,7 @@ const utilities = require('../utilities/');
 const revCont = {};
 
 revCont.addReview = async (req, res) => {
-    req.flash("notice", "This is a flash message.")
+    // req.flash("notice", "This is a flash message.")
     const { review_text, inv_id, account_id } = req.body;
     try {
         await revModel.addReview(review_text, inv_id, account_id);
